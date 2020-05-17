@@ -17,7 +17,7 @@ Replace SERVERID with the ID found in the URL of your server
 
 Use obj for the following functions
 
-All functions callback data from http.Fetch
+All functions callback data is from http.Fetch
 
 In the callback make sure to use ``util.JSONToTable()``
 <br><br><br>
