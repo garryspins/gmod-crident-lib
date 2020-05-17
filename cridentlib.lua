@@ -1,26 +1,32 @@
 AddCSLuaFile()
 local lib = {}
+local object = {__index=self}
 
-function lib:Internal(key, append, callback)
+
+function object:Internal(key, append, callback)
 	http.Fetch("https://dino.gg/api/client/servers/" .. append, callback, nil, {
 		["Content-Type"] = "application/json",
 		["Accept"] = "application/vnd.dinopanel.v1+json",
-		["Authorization"] = "Bearer " .. tostring(key)
+		["Authorization"] = "Bearer " .. key
 	})
-	hook.Call("CRIDENTLIB_Fetch", nil, append)
 end
 
-function lib:ServerConnection(key, serverid, callback)
-	self:Internal(key, serverid, callback)
+function object:ServerConnection(callback)
+	object:Internal(self.key, self.serverid, callback)
 end
 
-function lib:ServerUsage(key, serverid, callback)
-	self:Internal(key, serverid .. "/utilization", callback)
+function object:ServerUsage(callback)
+	self:Internal(self.key, self.serverid .. "/utilization", callback)
 end
 
-function lib:ClientServers(key, callback)
-	self:Internal(key, nil, callback)
+function object:ClientServers(callback)
+	self:Internal(self.key, nil, callback)
 end
 
+function lib:Init(key, serverid)
+	object.key = key
+	object.serverid = serverid
+	return object
+end
 
 return lib
