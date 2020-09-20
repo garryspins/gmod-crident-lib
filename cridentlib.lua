@@ -1,6 +1,6 @@
-AddCSLuaFile()
+--AddCSLuaFile()
 local lib = {}
-local object = {__index=self}
+local object = {__index=object}
 
 
 function object:Internal(key, append, callback)
@@ -24,9 +24,8 @@ function object:ClientServers(callback)
 end
 
 function lib:Init(key, serverid)
-	object.key = key
-	object.serverid = serverid
-	return object
+	return setmetatable({key=key,serverid=serverid},object)
 end
 
 return lib
+
