@@ -1,10 +1,11 @@
---AddCSLuaFile()
 local lib = {}
-local object = {__index=object}
+local object = {}
 
+lib.__index = lib
+object.__index = object
 
-function object:Internal(key, append, callback)
-	http.Fetch("https://dino.gg/api/client/servers/" .. append, callback, nil, {
+function object:Internal(key, point, callback)
+	http.Fetch("https://dino.gg/api/client/servers/" .. point, callback, nil, {
 		["Content-Type"] = "application/json",
 		["Accept"] = "application/vnd.dinopanel.v1+json",
 		["Authorization"] = "Bearer " .. key
@@ -28,4 +29,3 @@ function lib:Init(key, serverid)
 end
 
 return lib
-
